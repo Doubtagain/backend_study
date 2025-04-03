@@ -2,14 +2,13 @@ package com.study.study.member.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.study.study.common.annotation.ValidEnum
-import com.study.study.common.status.Gender
 import com.study.study.common.status.UnivHouseType
 import com.study.study.member.entity.Member
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 data class MemberDtoRequest (
     val id: Long?,
@@ -49,9 +48,6 @@ data class MemberDtoRequest (
         get() = UnivHouseType.valueOf(_univHouseType!!)
     val email : String
         get() = _email!!
-
-    private fun String.toLocalDate(): LocalDate =
-        LocalDate.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
     fun toEntity(): Member =
         Member(id, loginId, password, name, univHouseType, email)

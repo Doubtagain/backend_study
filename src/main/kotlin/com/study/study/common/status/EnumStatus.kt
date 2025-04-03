@@ -10,12 +10,11 @@ enum class UnivHouseType (val type: String) {
     KYS14("경상14"),
 }
 
-enum class Gender (val desc: String) {
-    MAN("남"),
-    WOMAN("여"),
-}
-
 enum class ResultCode (val msg: String) {
     SUCCESS("Process Succeed."),
     ERROR("Process Failed."),
+}
+
+enum class ROLE {
+    MEMBER, ADMIN
 }
