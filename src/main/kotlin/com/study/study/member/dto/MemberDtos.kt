@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.study.study.common.annotation.ValidEnum
 import com.study.study.common.status.UnivHouseType
 import com.study.study.member.entity.Member
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
@@ -28,6 +26,7 @@ data class MemberDtoRequest (
     @field:NotBlank
     @JsonProperty("name")
     private val _name: String?,
+
     @field:NotBlank
     @field:ValidEnum(enumClass = UnivHouseType::class, message = "Choose MAN or WOMAN")
     @JsonProperty("univHouseType")
@@ -51,5 +50,20 @@ data class MemberDtoRequest (
 
     fun toEntity(): Member =
         Member(id, loginId, password, name, univHouseType, email)
+}
+
+data class LoginDto(
+    @field:NotBlank
+    @JsonProperty("loginID")
+    private val _loginId: String?,
+
+    @field:NotBlank
+    @JsonProperty("password")
+    private val _password: String?,
+) {
+    val loginId: String
+    get() = _loginId!!
+    val password: String
+    get() = _password!!
 }
 
