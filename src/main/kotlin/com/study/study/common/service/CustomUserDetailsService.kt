@@ -1,5 +1,6 @@
 package com.study.study.common.service
 
+import com.study.study.common.dto.CustomUser
 import com.study.study.member.entity.Member
 import com.study.study.member.repository.MemberRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -20,7 +21,8 @@ class CustomUserDetailsService (
             ?.let { createUserDetails(it) } ?: throw UsernameNotFoundException("User not found")
 
     private fun createUserDetails(member: Member): UserDetails =
-        User(
+        CustomUser(
+            member.id!!,
             member.loginId,
             passwordEncoder.encode(member.password),
             member.memberRole!!.map { SimpleGrantedAuthority("ROLE_${it.role}")}

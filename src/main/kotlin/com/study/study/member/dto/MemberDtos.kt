@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 
 data class MemberDtoRequest (
-    val id: Long?,
+    var id: Long?,
 
     @field:NotBlank
     @JsonProperty("loginId")
@@ -50,6 +50,7 @@ data class MemberDtoRequest (
 
     fun toEntity(): Member =
         Member(id, loginId, password, name, univHouseType, email)
+
 }
 
 data class LoginDto(
@@ -67,3 +68,10 @@ data class LoginDto(
     get() = _password!!
 }
 
+data class MemberDtoResponse (
+    val id: Long,
+    val loginId: String,
+    val name: String,
+    val univHouseType: UnivHouseType,
+    val email: String,
+)

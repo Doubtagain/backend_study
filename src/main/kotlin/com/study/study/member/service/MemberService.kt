@@ -6,10 +6,12 @@ import com.study.study.common.exception.InvalidInputException
 import com.study.study.common.status.ROLE
 import com.study.study.member.dto.LoginDto
 import com.study.study.member.dto.MemberDtoRequest
+import com.study.study.member.dto.MemberDtoResponse
 import com.study.study.member.entity.Member
 import com.study.study.member.entity.MemberRole
 import com.study.study.member.repository.MemberRepository
 import com.study.study.member.repository.MemberRoleRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.stereotype.Service
@@ -51,5 +53,22 @@ class MemberService(
         val authentication = authenticationManagerBuilder.`object`.authenticate(authenticationToken)
 
         return jwtTokenProvider.createToken(authentication)
+    }
+
+    /**
+     * Search my Info
+     */
+    fun searchMyInfo(id: Long): MemberDtoResponse {
+        val member = memberRepository.findByIdOrNull(id) ?: throw InvalidInputException("id", "Not (${id}) User Found")
+        return member.toDto()
+    }
+
+    /**
+     * Edit My Info
+     */
+    fun saveMyInfo(memberDtoRequest: MemberDtoRequest): String {
+        val member: Member = memberDtoRequest.toEntity()
+        memberRepository.save(member)
+        return "Edit Complete"
     }
 }
