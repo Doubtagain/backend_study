@@ -9,9 +9,8 @@ import java.time.format.DateTimeFormatter
 data class BoardDtosRequsest (
     var id: Long?,
 
-    @field:NotBlank
     @JsonProperty("uploadId")
-    private val _uploadId: String?,
+    var uploadId: String?,
 
     @field:NotBlank
     @JsonProperty("title")
@@ -25,8 +24,6 @@ data class BoardDtosRequsest (
     @JsonProperty("uploadDate")
     private val _uploadDate: String?,
 ) {
-    val uploadId: String
-        get() = _uploadId!!
     val title: String
         get() = _title!!
     val description: String
@@ -40,3 +37,11 @@ data class BoardDtosRequsest (
     private fun String.toLocalDateTime(): LocalDateTime =
         LocalDateTime.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 }
+
+data class BoardDtoResponse(
+    val id: Long,
+    var uploadId: String,
+    val title: String,
+    val description: String,
+    val uploadDate: LocalDateTime,
+)
