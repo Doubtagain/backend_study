@@ -27,7 +27,7 @@ class BoardService (
         }
 
         var board = boardDtosRequsest.toEntity()
-        board = boardRepository.save(board)
+        boardRepository.save(board)
 
         return "Success Upload Board"
     }

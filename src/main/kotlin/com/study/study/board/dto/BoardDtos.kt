@@ -41,6 +41,8 @@ data class BoardDtosRequsest (
         LocalDateTime.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 }
 
+/**
+ * Add BoardInfoFunction Later.
 data class BoardDtoResponse(
     val id: Long,
     var uploadId: String,
@@ -48,3 +50,4 @@ data class BoardDtoResponse(
     val description: String,
     val uploadDate: LocalDateTime,
 )
+ */
