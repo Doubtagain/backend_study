@@ -1,5 +1,6 @@
 package com.study.study.common.authority
 
+import com.study.study.common.dto.CustomUser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.*
 import io.jsonwebtoken.io.Decoders
@@ -39,7 +40,8 @@ class JwtTokenProvider{
         val accessToken = Jwts
             .builder()
             .subject(authentication.name)
-            .claim("role", authorities)
+            .claim("auth", authorities)
+            .claim("userId", (authentication.principal as CustomUser).userId)
             .issuedAt(now)
             .expiration(accessExpriation)
             .signWith(key, Jwts.SIG.HS256)
@@ -52,12 +54,13 @@ class JwtTokenProvider{
         val claims: Claims = getClaims(token)
 
         val auth = claims["auth"] ?: throw RuntimeException("Invalid auth claims")
+        val userId = claims["userId"] ?: throw RuntimeException("Invalid auth claims")
 
         val authorities: Collection<GrantedAuthority> = (auth as String)
             .split(",")
             .map {SimpleGrantedAuthority(it)}
 
-        val principal: UserDetails = User(claims.subject, "", authorities)
+        val principal: UserDetails = CustomUser(userId.toString().toLong(), claims.subject, "", authorities)
 
         return UsernamePasswordAuthenticationToken(principal, "", authorities)
     }
@@ -79,8 +82,6 @@ class JwtTokenProvider{
         }
         return false
     }
-
     private fun getClaims(token: String): Claims =
-        Jwts.parser().setSigningKey(key).build().parseClaimsJws(token).body
-
+        Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
 }

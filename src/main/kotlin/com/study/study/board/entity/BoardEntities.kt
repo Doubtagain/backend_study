@@ -10,7 +10,10 @@ class Board (
     var id: Long? = null,
 
     @Column(nullable = false, length = 30, updatable = false)
-    var uploadId: String,
+    var uploadId: String? = null,
+
+    @Column(nullable = false, length = 30, updatable = false)
+    var uploadName: String? = null,
 
     @Column(nullable = false, length = 100)
     var title: String,

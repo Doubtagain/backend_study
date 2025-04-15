@@ -2,6 +2,7 @@ package com.study.study.member.entity
 
 import com.study.study.common.status.ROLE
 import com.study.study.common.status.UnivHouseType
+import com.study.study.member.dto.MemberDtoResponse
 import jakarta.persistence.*
 import java.time.LocalDate
 
@@ -32,6 +33,9 @@ class Member (
 ) {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
     val memberRole: List<MemberRole>? = null
+
+    fun toDto(): MemberDtoResponse =
+        MemberDtoResponse(id!!, loginId, name, univHouseType, email)
 }
 
 @Entity
