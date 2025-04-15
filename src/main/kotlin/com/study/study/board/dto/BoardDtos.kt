@@ -12,6 +12,9 @@ data class BoardDtosRequsest (
     @JsonProperty("uploadId")
     var uploadId: String?,
 
+    @JsonProperty("uploadName")
+    var uploadName: String?,
+
     @field:NotBlank
     @JsonProperty("title")
     private val _title: String?,
@@ -32,7 +35,7 @@ data class BoardDtosRequsest (
         get() = _uploadDate!!.toLocalDateTime()
 
     fun toEntity(): Board =
-        Board(id, uploadId, title, description, uploadDate)
+        Board(id, uploadId, uploadName, title, description, uploadDate)
 
     private fun String.toLocalDateTime(): LocalDateTime =
         LocalDateTime.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))

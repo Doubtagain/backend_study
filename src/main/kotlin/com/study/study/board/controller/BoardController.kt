@@ -23,6 +23,7 @@ class BoardController (private val boardService: BoardService, private val membe
         val userId = (SecurityContextHolder.getContext().authentication.principal as CustomUser).userId
         val response = memberService.searchMyInfo(userId)
         boardDtosRequsest.uploadId = response.loginId
+        boardDtosRequsest.uploadName = response.name
         val resultMsg: String = boardService.upload(boardDtosRequsest)
 
         return BaseResponse(msg = resultMsg)
