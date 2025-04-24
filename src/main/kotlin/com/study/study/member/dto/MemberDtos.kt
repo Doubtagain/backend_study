@@ -55,7 +55,7 @@ data class MemberDtoRequest (
 
 data class LoginDto(
     @field:NotBlank
-    @JsonProperty("loginID")
+    @JsonProperty("loginId")
     private val _loginId: String?,
 
     @field:NotBlank

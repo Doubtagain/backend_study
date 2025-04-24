@@ -41,13 +41,20 @@ data class BoardDtosRequsest (
         LocalDateTime.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 }
 
-/**
- * Add BoardInfoFunction Later.
+data class SearchDto(
+    @field:NotBlank
+    @JsonProperty("uploadId")
+    private val _uploadId: String?,
+) {
+    val uploadId: String
+        get() = _uploadId!!
+}
+
 data class BoardDtoResponse(
     val id: Long,
     var uploadId: String,
+    var uploadName: String,
     val title: String,
     val description: String,
     val uploadDate: LocalDateTime,
 )
- */

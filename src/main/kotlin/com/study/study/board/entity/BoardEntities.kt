@@ -2,12 +2,13 @@ package com.study.study.board.entity
 
 import jakarta.persistence.*
 import java.time.LocalDateTime
+import com.study.study.board.dto.BoardDtoResponse
 
 @Entity
 class Board (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Long? = null,
+    val id: Long? = null,
 
     @Column(nullable = false, length = 30, updatable = false)
     var uploadId: String? = null,
@@ -23,4 +24,8 @@ class Board (
 
     @Column(nullable = false)
     var uploadDate: LocalDateTime,
-)
+
+) {
+    fun toDto(): BoardDtoResponse =
+        BoardDtoResponse(id!!, uploadId!!, uploadName!!, title, description, uploadDate)
+}

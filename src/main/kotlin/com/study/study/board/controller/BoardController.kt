@@ -1,16 +1,15 @@
 package com.study.study.board.controller
 
+import com.study.study.board.dto.BoardDtoResponse
 import com.study.study.board.dto.BoardDtosRequsest
+import com.study.study.board.dto.SearchDto
 import com.study.study.board.service.BoardService
 import com.study.study.common.dto.BaseResponse
 import com.study.study.common.dto.CustomUser
 import com.study.study.member.service.MemberService
 import jakarta.validation.Valid
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RequestMapping("/api/board")
 @RestController
@@ -28,4 +27,24 @@ class BoardController (private val boardService: BoardService, private val membe
 
         return BaseResponse(msg = resultMsg)
     }
+
+    /**
+     * Get Info Board, Specific
+     */
+
+    @GetMapping("/info")
+    fun getInfo(@RequestBody @Valid searchDto: SearchDto): BaseResponse<ArrayList<BoardDtoResponse>> {
+        val response = boardService.searchSpecificBoard(searchDto.uploadId)
+        return BaseResponse(data = response)
+    }
+
+    /**
+     * Get Info Board. Not Specific
+     */
+    @GetMapping("/")
+    fun getInfo(): BaseResponse<ArrayList<BoardDtoResponse>> {
+        val response = boardService.searchAllBoard()
+        return BaseResponse(data = response)
+    }
+
 }
